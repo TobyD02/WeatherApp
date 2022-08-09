@@ -1,3 +1,12 @@
+/* TODO:
+    - Sun/Moon should move up and down, peak at midday/midnight and low at change
+    - Add animations for rain, snow, storms, etc...
+    - Add weather api integrations
+    - Group animation divs into one and set z-index as -1 -> they will be the background
+        - Add Front end gui that describes weather more precisely
+*/
+
+
 const colours = {
     'night': '#141834',
     'sunset1': '#41488C',
