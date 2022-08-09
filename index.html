@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            background-color: black;
+        }
+        #ground {
+            width: 100vw;
+            height: 30vh;
+            background-color: #548e44;
+            position: absolute; 
+            bottom: 0%; 
+            left: 0%;
+            z-index: 1;
+        }
+        #sky {
+            height: 70vh;
+            width: 100vw;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: cyan;
+            z-index: -1;
+        }
+
+        #sun {
+            position: absolute;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            border-radius: 50px;
+            border-style: none;
+            z-index: 1;
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background color = time of day -->
+    <!-- Sun or moon = time of day -->
+    <div id="sky"></div>
+    <div id="ground"></div>
+    <div id="sun"></div>
+    <!-- Rain, Snow, Storm etc... overtop -->
+    <script src='main.js'></script>
+</body>
+</html>
