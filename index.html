@@ -7,45 +7,77 @@
     <title>Weather App</title>
     <style>
         body {
-            background-color: black;
+            background-color: white;
         }
         #ground {
-            width: 100vw;
-            height: 30vh;
+            width: 100%;
+            height: 30%;
             background-color: #548e44;
             position: absolute; 
             bottom: 0%; 
             left: 0%;
-            z-index: 1;
         }
         #sky {
-            height: 70vh;
-            width: 100vw;
+            height: 70%;
+            width: 100%;
             position: absolute;
             left: 0;
             top: 0;
             background-color: cyan;
-            z-index: -1;
         }
 
         #sun {
             position: absolute;
             left: 0;
-            width: 100px;
-            height: 100px;
-            border-radius: 50px;
+            top: 100px;
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
             border-style: none;
-            z-index: 1;
             background-color: yellow;
+        }
+
+        #background {
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        #foreground {
+            position: absolute;
+            width: 200px;
+        }
+
+        #container {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            border-style: none;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
     <!-- Background color = time of day -->
     <!-- Sun or moon = time of day -->
-    <div id="sky"></div>
-    <div id="ground"></div>
-    <div id="sun"></div>
+    <div id="container">
+        <div id="background">
+            <div id="sky">
+                <img src='stars_large.png' class='stars' style="opacity: 0"></img>
+                <img src='stars_medium.png' class='stars' style="opacity: 0"></img>
+                <img src='stars_small.png' class='stars' style="opacity: 0"></img>
+            </div>
+            <div id="ground"></div>
+            <div id="sun"></div>
+        </div>
+        <div id="foreground">
+            <h1>Hello World</h1>
+        </div>
+    </div>
     <!-- Rain, Snow, Storm etc... overtop -->
     <script src='main.js'></script>
 </body>

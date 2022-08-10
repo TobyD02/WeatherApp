@@ -1,5 +1,7 @@
 /* TODO:
-    - Sun/Moon should move up and down, peak at midday/midnight and low at change
+    - *optional* make suns path parabolic rather than linear
+    - Add stars div
+        - Layers on top of sky. Opacity 0 when day time, 100 when night
     - Add animations for rain, snow, storms, etc...
     - Add weather api integrations
     - Group animation divs into one and set z-index as -1 -> they will be the background
@@ -24,14 +26,25 @@ const grass = {
 const DAY = 6
 const NIGHT = 18
 
+const WIDTH = 400;
+const HEIGHT = 600;
+
 let sky_col = colours.midday
 let ground_col = grass.day
 
-function update() {
-    let date = new Date()
-    let time = date.getHours()
+let container = document.getElementById('container')
+container.style = `width: ${WIDTH}px; height: ${HEIGHT}px;`
 
-    time = 16
+let date = new Date()
+let time = date.getHours()
+
+function update() {
+
+    date = new Date()
+    time = date.getHours()
+    
+    // time++ 
+    // if (time > 23) time = 0
     
     draw(time)
 }
@@ -53,26 +66,34 @@ function draw(time) {
 function get_col(time) {
 
     // Get colours, lower bound inclusive
+    let opacity = 0
 
     if (time >= DAY && time < NIGHT) {
         sky_col = colours.midday
         ground_col = grass.day
+        opacity = '0%'
+
     } else {
         sky_col = colours.night 
         ground_col = grass.night
+        opacity = '100%'
     }
     
     if (time == 5) sky_col = colours.sunrise1
     if (time == 6) sky_col = colours.sunrise2
     if (time == 17) sky_col = colours.sunset1
     if (time == 18) sky_col = colours.sunset2
-    
-    console.log(time)
+
+    // Set stars opacity
+    for (let i = 0; i < document.querySelectorAll('.stars').length; i++) {
+        document.querySelectorAll('.stars')[i].style = `opacity: ${opacity};`
+    }
 
 }
 
 function get_sun(time) {
     // Style components
+
     let style = []
 
     let sun_time = time + 6 > 23 ? time - 6 : time + 6
@@ -81,17 +102,19 @@ function get_sun(time) {
     // Get sun or moon
     if (time >= DAY && time < NIGHT) style.push('background-color: yellow;')
     else style.push('background-color: white;')
+
+    // Get x position
+    let x = ((WIDTH + 10) / 12) * sun_time
+
+    // Get y position
+    let y_mod = Math.abs(sun_time - 6) 
+
+    let y = ((HEIGHT / 20) + (HEIGHT / 10) + (y_mod * 10))
+
+
+    style.push(`left: ${x}px; top: ${y}px;`)
+
     
-    // Get position (parabolic path - terraria style)
-
-    // Get suntime to radians
-    let x = ((window.innerWidth + 100) / 12) * sun_time - 50
-
-
-    style.push(`left: ${x}px;`)
-    // style.push(`top: calc(${ (Math.sin(Math.abs(time - 12) / 12)) * window.innerHeight + 200}px);`)
-
-    // console.log(style[1])
     return style.join('')
 
 
@@ -102,4 +125,4 @@ function get_weather() {
 }
 
 update()
-setInterval(update, 4000)
+setInterval(update, 500)
