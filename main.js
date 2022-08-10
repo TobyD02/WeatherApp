@@ -1,11 +1,8 @@
 /* TODO:
     - *optional* make suns path parabolic rather than linear
-    - Add stars div
-        - Layers on top of sky. Opacity 0 when day time, 100 when night
     - Add animations for rain, snow, storms, etc...
     - Add weather api integrations
-    - Group animation divs into one and set z-index as -1 -> they will be the background
-        - Add Front end gui that describes weather more precisely
+    - Add Front end gui that describes weather more precisely
 */
 
 
@@ -42,7 +39,7 @@ function update() {
 
     date = new Date()
     time = date.getHours()
-    
+
     // time++ 
     // if (time > 23) time = 0
     
