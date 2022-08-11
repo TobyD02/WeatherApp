@@ -34,14 +34,16 @@ container.style = `width: ${WIDTH}px; height: ${HEIGHT}px;`
 
 let date = new Date()
 let time = date.getHours()
+let last_check = date
+
+let u_location = null
 
 function update() {
 
     date = new Date()
     time = date.getHours()
 
-    // time++ 
-    // if (time > 23) time = 0
+    check_update()
     
     draw(time)
 }
@@ -51,8 +53,8 @@ function draw(time) {
     get_col(time)
 
     // Draw sky
-    document.getElementById('sky').style.background = sky_col
-    document.getElementById('ground').style.background = ground_col
+    document.getElementById('sky').style = `background: ${sky_col}; opacity: 100%;`
+    document.getElementById('ground').style = `background: ${ground_col}; opacity: 100%`
 
     // Draw sun
     let sun = get_sun(time)
@@ -109,7 +111,7 @@ function get_sun(time) {
     let y = ((HEIGHT / 20) + (HEIGHT / 10) + (y_mod * 10))
 
 
-    style.push(`left: ${x}px; top: ${y}px;`)
+    style.push(`left: ${x}px; top: ${y}px; opacity: 100%;`)
 
     
     return style.join('')
@@ -121,5 +123,25 @@ function get_weather() {
 
 }
 
-update()
-setInterval(update, 500)
+function check_update() {
+    // Check if it has been 10 minutes
+    if (Math.abs(date.getMinutes() - last_check.getMinutes() >= 10)) {
+        last_check = date
+        get_weather()
+    }
+}
+
+function get_location() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(return_location, (err) => {
+            document.getElementById('loaded').innerText = "Failed to access location"
+        })
+    }
+}
+
+async function return_location(p) {
+    u_location = await p.coords
+    setInterval(update, 4000)
+}
+
+get_location()
