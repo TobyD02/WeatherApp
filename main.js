@@ -52,9 +52,10 @@ function draw(time) {
     // Get sky colour
     get_col(time)
 
-    // Draw sky
     document.getElementById('sky').style = `background: ${sky_col}; opacity: 100%;`
     document.getElementById('ground').style = `background: ${ground_col}; opacity: 100%`
+    document.getElementById('foreground').style = `opacity: 100%`
+    document.getElementById('loaded').style = `opacity: 0`
 
     // Draw sun
     let sun = get_sun(time)
@@ -100,7 +101,7 @@ function get_sun(time) {
 
     // Get sun or moon
     if (time >= DAY && time < NIGHT) style.push('background-color: yellow;')
-    else style.push('background-color: white;')
+    else style.push('background-color: rgba(200, 200, 200);')
 
     // Get x position
     let x = ((WIDTH + 10) / 12) * sun_time
@@ -120,7 +121,13 @@ function get_sun(time) {
 }
 
 function get_weather() {
-
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${u_location.latitude}&lon=${u_location.longitude}&appid=${api_key}`)
+    .then((res) => res.json()).then((data) => {
+        console.log(data)
+        document.getElementById('area').innerText = `${data.name}`
+        document.getElementById('forecast').innerText = `${data.weather[0].main}`
+        document.getElementById('temp').innerText = `${(data.main.temp - 272.15).toFixed(1)}°`
+    })
 }
 
 function check_update() {
@@ -133,14 +140,18 @@ function check_update() {
 
 function get_location() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(return_location, (err) => {
-            document.getElementById('loaded').innerText = "Failed to access location"
-        })
+        navigator.geolocation.getCurrentPosition(return_location, (err) => handle_error)
     }
 }
 
+function handle_error() {
+    document.getElementById('loaded').innerText = "Failed to access location"
+}   
+
 async function return_location(p) {
     u_location = await p.coords
+    get_weather()
+    update()
     setInterval(update, 4000)
 }
 
