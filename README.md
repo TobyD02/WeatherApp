@@ -12,3 +12,13 @@ const api_key = ""
 ```
 
 Once this has been done, you can run the index.html file and if location services are provided access the app should run.
+
+## Features
+- Animated sun and moon styling and position depending on the time of day
+- Stars are shown/hidden depending on time of day
+- Sky and ground colour changes depending on time of day (sunset and sunrise included for sky)
+- Clouds are created and animated depending on current cloud coverage of location
+    - Clouds are also changed if it is raining
+- Displays location name and relevant weather information of location. This is updated every 10 minutes.
+    - Temperature (in celsius)
+    - Current weather description (clear, raining etc..)

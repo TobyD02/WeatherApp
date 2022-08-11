@@ -47,10 +47,10 @@ function update() {
 
     check_update()
     
-    draw(time)
+    // draw(time)
 }
 
-function draw(time) {
+function draw() {
     // Get sky colour
     get_col(time)
 
@@ -91,6 +91,21 @@ function get_col(time) {
         document.querySelectorAll('.stars')[i].style = `opacity: ${opacity};`
     }
 
+    // Set clouds position
+    for (let i = 0; i < document.querySelectorAll('.cloud').length; i++) {
+        let c = document.querySelectorAll('.cloud')[i]
+        let left_pos = c.style.left
+        let x = parseInt(left_pos.slice(0, left_pos.length - 2))
+
+        // Move cloud
+        c.style.left = `${x + 1}px`
+        
+        // If offscreen move
+        if (x > WIDTH)
+            c.style.left = `-${c.offsetWidth}px`
+
+    } 
+
 }
 
 function get_sun(time) {
@@ -126,9 +141,23 @@ function get_weather() {
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${u_location.latitude}&lon=${u_location.longitude}&appid=${api_key}`)
     .then((res) => res.json()).then((data) => {
         console.log(data)
+
+        // -- Set background elements -- 
+
+        // Delete clouds and remake depending on coverage
+        let clouds = document.getElementsByClassName('clouds')
+        while (clouds.length > 0) 
+            clouds[0].parentNode.removeChild(clouds[0])
+
+        // Now add clouds depending on coverage
+        create_clouds(data.weather[0].id)
+
+        // -- Set foreground elements --
         document.getElementById('area').innerText = `${data.name}`
         document.getElementById('forecast').innerText = `${data.weather[0].main}`
         document.getElementById('temp').innerText = `${(data.main.temp - 272.15).toFixed(1)}°`
+
+
     })
 }
 
@@ -154,7 +183,57 @@ async function return_location(p) {
     u_location = await p.coords
     get_weather()
     update()
-    setInterval(update, 4000)
+    setInterval(update, 400)
+    setInterval(draw, 20)
+}
+
+function create_clouds(id) {
+
+    if (id >= 800) {
+        // Clear sky
+
+        let count = id - 800
+        for (let i = 0; i < count; i++) {
+            let c = document.createElement('img')
+            c.src = 'cloud.png'
+            c.classList.add('cloud')
+            c.style.position = `fixed`
+            c.style.opacity = `opacity: 85%`
+            c.style.top = `${(HEIGHT / 5) + (HEIGHT / 20) * i + Math.floor(Math.random() * (HEIGHT / 20))}px`
+            c.style.left = `${i * 100 + Math.floor(Math.random() * WIDTH/2)}px`
+    
+            document.getElementById('clouds').appendChild(c)
+        }
+    } else if (id >= 500 && id <= 531) {
+        // Rain clouds
+        let count = id - 499
+        if (count > 5) count = 5
+        for (let i = 0; i < count; i++) {
+            let c = document.createElement('img')
+            c.src = 'rain_cloud.png'
+            c.classList.add('cloud')
+            c.style.position = `fixed`
+            c.style.opacity = `opacity: 85%`
+            c.style.top = `${(HEIGHT / 5) + (HEIGHT / 20) * i + Math.floor(Math.random() * (HEIGHT / 20))}px`
+            c.style.left = `${i * 100 + Math.floor(Math.random() * WIDTH/2)}px`
+    
+            document.getElementById('clouds').appendChild(c)
+        }
+    } else if (id >= 300 && id <= 321) {
+        // Drizzle
+        let c = document.createElement('img')
+        c.src = 'rain_cloud.png'
+        c.classList.add('cloud')
+        c.style.position = `fixed`
+        c.style.opacity = `opacity: 85%`
+        c.style.top = `${(HEIGHT / 5) + (HEIGHT / 20) + Math.floor(Math.random() * (HEIGHT / 20))}px`
+        c.style.left = `${100 + Math.floor(Math.random() * WIDTH/2)}px`
+    
+        document.getElementById('clouds').appendChild(c)
+    }
+
+    // TODO:
+    // Atmosphere effects, Snow, Thunderstorm: https://openweathermap.org/weather-conditions
 }
 
 get_location()
