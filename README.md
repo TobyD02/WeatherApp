@@ -14,6 +14,7 @@ const api_key = ""
 Once this has been done, you can run the index.html file and if location services are provided access the app should run.
 
 ## Features
+- Requests user location and uses it to make an API call to gather relevant information regarding location.
 - Animated sun and moon styling and position depending on the time of day
 - Stars are shown/hidden depending on time of day
 - Sky and ground colour changes depending on time of day (sunset and sunrise included for sky)
