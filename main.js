@@ -1,8 +1,10 @@
 /* TODO:
     - *optional* make suns path parabolic rather than linear
     - Add animations for rain, snow, storms, etc...
-    - Add weather api integrations
-    - Add Front end gui that describes weather more precisely
+        - Sky colour should be darker if raining and day time
+    - Add cloud animations
+        - Rain clouds if raining, regular if not
+    - Extend foreground weather descriptions to be more comprehensive
 */
 
 
