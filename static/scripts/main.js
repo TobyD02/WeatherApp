@@ -195,7 +195,7 @@ function create_clouds(id) {
         let count = id - 800
         for (let i = 0; i < count; i++) {
             let c = document.createElement('img')
-            c.src = 'cloud.png'
+            c.src = '/static/images/cloud.png'
             c.classList.add('cloud')
             c.style.position = `fixed`
             c.style.opacity = `opacity: 85%`
@@ -210,7 +210,7 @@ function create_clouds(id) {
         if (count > 5) count = 5
         for (let i = 0; i < count; i++) {
             let c = document.createElement('img')
-            c.src = 'rain_cloud.png'
+            c.src = '/static/images/rain_cloud.png'
             c.classList.add('cloud')
             c.style.position = `fixed`
             c.style.opacity = `opacity: 85%`
@@ -222,7 +222,7 @@ function create_clouds(id) {
     } else if (id >= 300 && id <= 321) {
         // Drizzle
         let c = document.createElement('img')
-        c.src = 'rain_cloud.png'
+        c.src = '/static/images/rain_cloud.png'
         c.classList.add('cloud')
         c.style.position = `fixed`
         c.style.opacity = `opacity: 85%`
