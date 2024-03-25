@@ -1,5 +1,7 @@
 # Simple Weather App
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 ## Description
 This is a simple weather app built in HTML and vanilla JavaScript using the OpenWeatherMap API: [OpenWeatherMap](https://openweathermap.org/). It is hosted using a Python flask application.
 
@@ -61,4 +63,3 @@ This is a simple weather app built in HTML and vanilla JavaScript using the Open
 - Displays location name and relevant weather information of the location. This is updated every 10 minutes.
     - Temperature (in Celsius).
     - Current weather description (clear, raining, etc.).
-
